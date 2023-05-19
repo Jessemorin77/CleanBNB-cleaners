@@ -1,0 +1,51 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+    provider = "prisma-client-js"
+}
+
+datasource db {
+    provider = "sqlite"
+    url      = env("DATABASE_URL")
+}
+
+model Post {
+    id      String @id @default(cuid())
+    title   String
+    content String
+}
+
+model Property {
+    id      String   @id @default(cuid())
+    Address String
+    City    String
+    State   String
+    Zip     Int
+    Beds    Int
+    Baths   Int
+    Sqft    Int
+    Type    String
+    Status  String
+    Image   String
+    Desc    String
+    listings Listing[]
+}
+
+
+
+model Listing {
+    id             String   @id @default(cuid())
+    propertyId     String
+    property       Property @relation(fields: [propertyId], references: [id])
+    jobType        String
+    contractorType String
+    reacurring     Boolean
+    readyToHire    Boolean
+    title          String
+    description    String
+    budget         Int
+}
+
+
+
