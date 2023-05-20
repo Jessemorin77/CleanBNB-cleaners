@@ -5,7 +5,6 @@ import { View, TextInput, Text, Image } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import * as ImagePicker from 'expo-image-picker';
 import AWS from 'aws-sdk'
-import supabase from '../config/supabase.conf';
 
 const s3 = new AWS.S3({
   accessKeyId: 'AKIA3TRZQE5PF7HOIJEI',
@@ -81,22 +80,17 @@ export const CreateProperty: React.FC = () => {
     try {
       const response = await fetch(uri);
       const blob = await response.blob();
-  
-      const fileExtension = uri.split('.').pop();
-      const fileName = `property_${Date.now()}.${fileExtension}`;
-  
-      const { error } = await supabase
-        .storage
-        .from('ListingImages')
-        .upload(fileName, blob, { contentType: 'image/jpeg' });
-  
-      if (error) {
-        throw new Error('Image upload failed');
-      }
-  
-      // If upload was successful, construct and return the public URL
-      const publicURL = `https://dxfmzfhqkuxbmalsxqwo.supabase.co`;
-      return publicURL;
+
+      const params = {
+        Bucket: 'cleanbnb-images',
+        Key: `property_${Date.now()}.jpg`,
+        Body: blob,
+        ContentType: 'image/jpeg',
+      };
+
+      await s3.upload(params).promise();
+      const signedUrl = await s3.getSignedUrlPromise('getObject', { Bucket: 'cleanbnb-images', Key: params.Key });
+      return signedUrl;
     } catch (error) {
       console.error(error);
       throw new Error('Image upload failed');
@@ -179,3 +173,6 @@ export const CreateProperty: React.FC = () => {
     </View>
   );
 };
+
+
+

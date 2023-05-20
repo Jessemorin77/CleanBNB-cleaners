@@ -2,12 +2,14 @@ import * as SecureStore from "expo-secure-store";
 import { Platform } from "react-native";
 
 export async function saveToken(key: string, value: string) {
-  // console.log("Save token", key, value);
+   console.log("Save token", key, value);
   await SecureStore.setItemAsync(key, value);
 }
 
 export async function getToken(key: string) {
+  console.log("Getting token for key", key);
   const value = await SecureStore.getItemAsync(key);
+  console.log("Got token", value);
   return value;
 }
 
