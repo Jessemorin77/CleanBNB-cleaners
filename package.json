@@ -16,6 +16,7 @@
   },
   "dependencies": {
     "@manypkg/cli": "^0.19.2",
+    "@supabase/supabase-js": "^2.22.0",
     "@typescript-eslint/eslint-plugin": "^5.57.1",
     "@typescript-eslint/parser": "^5.57.1",
     "eslint": "^8.37.0",
@@ -25,7 +26,6 @@
     "typescript": "^4.9.5"
   },
   "pnpm": {
-    "patchedDependencies": {
-    }
+    "patchedDependencies": {}
   }
 }
