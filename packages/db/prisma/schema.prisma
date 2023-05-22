@@ -10,42 +10,49 @@ datasource db {
     url      = env("DATABASE_URL")
 }
 
+model userProfile {
+  discordId   String   @id // This ID should correspond to the Clerk user ID
+  id          String   @default(cuid())
+  email       String?  // The user's email address.
+  name        String?  // The user's full name.
+  image       String?  // The URL of the profile picture.
+  experience  String?  // Description of user experience.
+  workType    String?  // Description of the type of work the user does.
+}
+
 model Post {
-    id      String @id @default(cuid())
-    title   String
-    content String
+  id      String @id @default(cuid())
+  title   String
+  content String
 }
 
 model Property {
-    id      String   @id @default(cuid())
-    Address String
-    City    String
-    State   String
-    Zip     Int
-    Beds    Int
-    Baths   Int
-    Sqft    Int
-    Type    String
-    Status  String
-    Image   String
-    Desc    String
-    listings Listing[]
+  id      String   @id @default(cuid())
+  Address String
+  City    String
+  State   String
+  Zip     Int
+  Beds    Int
+  Baths   Int
+  Sqft    Int
+  Type    String
+  Status  String
+  Image   String
+  Desc    String
+  listings Listing[]
 }
-
-
 
 model Listing {
-    id             String   @id @default(cuid())
-    propertyId     String
-    property       Property @relation(fields: [propertyId], references: [id])
-    jobType        String
-    contractorType String
-    reacurring     Boolean
-    readyToHire    Boolean
-    title          String
-    description    String
-    budget         Int
+  id             String   @id @default(cuid())
+  propertyId     String
+  property       Property @relation(fields: [propertyId], references: [id])
+  jobType        String
+  contractorType String
+  reacurring     Boolean
+  readyToHire    Boolean
+  title          String
+  description    String
+  budget         Int
 }
-
 
 

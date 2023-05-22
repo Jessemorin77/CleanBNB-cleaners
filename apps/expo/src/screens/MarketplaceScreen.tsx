@@ -1,14 +1,9 @@
-import {
-  View,
-  Text,
-  SafeAreaView,
-  Button,
-  Image,
-  StyleSheet,
-} from "react-native";
+import React from "react";
+import { View, Text, SafeAreaView, Image, TouchableOpacity } from "react-native";
 import { FlatList } from "react-native-gesture-handler";
-import type { inferProcedureOutput } from "@trpc/server";
-import type { AppRouter } from "@acme/api";
+import { StackNavigationProp } from "@react-navigation/stack";
+import { MarketplaceStackParamList } from "../navigation/UserStack";
+import { useNavigation } from "@react-navigation/native";
 import { trpc } from "../utils/trpc";
 
 interface PropertyData {
@@ -36,37 +31,14 @@ interface ListingData {
   propertyId: string;
   property?: PropertyData | null; // Make property optional
 }
-type Listing = inferProcedureOutput<AppRouter["list"]["all"]>[number] &
-  ListingData;
 
-const renderMyItem: React.FC<{ listing: Listing }> = ({ listing }) => {
-  if (!listing.property || !listing.property.Image) {
-    return null; // Skip rendering if image URI is empty or undefined
-  }
+type Listing = ListingData;
 
-  console.log("Image URI:", listing.property.Image);
+interface MarketplaceScreenProps {
+  navigation: StackNavigationProp<MarketplaceStackParamList, "Marketplace">;
+}
 
-  return (
-    <View style={styles.listingContainer}>
-      
-      <Image
-        source={{ uri: listing.property.Image }}
-        style={styles.listingImage}
-        resizeMode="cover"
-      />
-      <Text style={styles.listingImageUri}>{listing.property.Image}</Text>
-      <Text style={styles.listingTitle}>{listing.title}</Text>
-      <Text style={styles.listingDescription}>{listing.description}</Text>
-      <Text style={styles.listingBudget}>Budget: ${listing.budget}</Text>
-      <Text style={styles.listingJobType}>Job Type: {listing.jobType}</Text>
-      <Text style={styles.listingContractorType}>
-        Contractor Type: {listing.contractorType}
-      </Text>
-    </View>
-  );
-};
-
-const MarketplaceScreen = () => {
+const MarketplaceScreen: React.FC<MarketplaceScreenProps> = ({ navigation }) => {
   const { data: listingData } = trpc.list.all.useQuery();
   const { data: propertyData } = trpc.property.all.useQuery();
 
@@ -81,62 +53,47 @@ const MarketplaceScreen = () => {
     };
   });
 
+  const handleListingPress = (listing: Listing) => {
+    navigation.navigate("ListingDetails", { listingId: listing.id });
+  };
+
+  const renderMyItem: React.FC<{ listing: Listing }> = ({ listing }) => {
+    if (!listing.property || !listing.property.Image) {
+      return null; // Skip rendering if image URI is empty or undefined
+    }
+
+    console.log("Image URI:", listing.property.Image);
+
+    return (
+      <View className="border border-gray-500 rounded-lg p-4 mb-4 w-1/2">
+        <TouchableOpacity onPress={() => handleListingPress(listing)}>
+          <Image
+            source={{ uri: listing.property.Image }}
+            className="w-full h-40 mb-4 rounded-lg"
+            resizeMode="cover"
+          />
+          <Text className="font-bold text-lg mb-2 text-white">{listing.title}</Text>
+          <Text className="text-white mb-2 ">{listing.description}</Text>
+          <Text className="mb-2 text-white">Budget: ${listing.budget}</Text>
+          <Text className="mb-2 text-white">Job Type: {listing.jobType}</Text>
+          <Text className="mb-2 text-white">Contractor Type: {listing.contractorType}</Text>
+        </TouchableOpacity>
+      </View>
+    );
+  };
+
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: "gray", padding: 7 }}>
+    <SafeAreaView className="h-full bg-black p-5">
+      <Text className="text-white text-3xl text-center mb-5">Marketplace</Text>
       <FlatList
         data={listings}
         renderItem={({ item }) => renderMyItem({ listing: item })}
         keyExtractor={(item) => item.id.toString()}
         numColumns={2}
         contentContainerStyle={{ paddingVertical: 8 }}
-        columnWrapperStyle={styles.listingColumnWrapper}
       />
     </SafeAreaView>
   );
 };
-
-const styles = StyleSheet.create({
-  listingContainer: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    borderWidth: 1,
-    borderColor: "gray",
-    borderRadius: 5,
-    padding: 10,
-    margin: 5,
-    width: "48%",
-  },
-  listingImage: {
-    width: "100%",
-    height: 150,
-    marginBottom: 10,
-    borderRadius: 5,
-  },
-  listingTitle: {
-    fontWeight: "bold",
-    fontSize: 16,
-    marginBottom: 5,
-  },
-  listingDescription: {
-    marginBottom: 5,
-  },
-  listingBudget: {
-    marginBottom: 5,
-  },
-  listingJobType: {
-    marginBottom: 5,
-  },
-  listingContractorType: {
-    marginBottom: 5,
-  },
-  listingColumnWrapper: {
-    justifyContent: "space-between",
-  },
-  listingImageUri: {
-    marginBottom: 5,
-    color: "gray",
-  },
-});
 
 export default MarketplaceScreen;

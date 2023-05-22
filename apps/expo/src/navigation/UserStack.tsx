@@ -6,6 +6,10 @@ import  {AddPropertyScreen}  from "../screens/AddPropertyScreen"
 import { View } from "react-native"
 import  MarketplaceScreen  from "../screens/MarketplaceScreen"
 import { ScheduledAppointmentScreen } from "../screens/ScheduledAppointmentScreen"
+import { ChatScreen } from "../screens/ChatScreen"
+import { WalletScreen } from "../screens/WalletScreen"
+import { ProfileScreen } from "../screens/ProfileScreen"
+import ListingDetailsScreen from "../screens/ListingDetailsScreen"
 
 const Stack = createStackNavigator()
 const Tab = createBottomTabNavigator();
@@ -15,17 +19,23 @@ export type PropertyStackParamList = {
   AddProperty: undefined;
 };
 
-const PropertyStack = () => {
+
+export type MarketplaceStackParamList = {
+  Marketplace: undefined;
+  ListingDetails: undefined;
+};
+
+const MarketplaceStack = () => {
   return (
     <Stack.Navigator>
       <Stack.Screen
-        name="Property"
-        component={PropertyScreen}
+        name="Marketplace"
+        component={MarketplaceScreen}
         options={{ headerShown: false }}
       />
       <Stack.Screen
-        name="AddProperty"
-        component={AddPropertyScreen}
+        name="ListingDetails"
+        component={ListingDetailsScreen}
         options={{ headerShown: false }}
       />
     </Stack.Navigator>
@@ -37,12 +47,24 @@ export type ListingStackParamList = {
     AddListing: undefined;
 }
 
-const ListingStack = () => {
+const ChatStack = () => {
     return (
         <Stack.Navigator>
             <Stack.Screen
-                name="Listing"
-                component={MarketplaceScreen}
+                name="Chat"
+                component={ChatScreen}
+                options={{ headerShown: false }}
+            />
+        </Stack.Navigator>
+    )
+}
+
+const ProfileStack = () => {
+    return (
+        <Stack.Navigator>
+            <Stack.Screen
+                name="Profile"
+                component={ProfileScreen}
                 options={{ headerShown: false }}
             />
         </Stack.Navigator>
@@ -73,9 +95,10 @@ export const TabNavigation = () => {
         }}
       >
         <Tab.Screen name="Home" component={HomeScreen} />
-        <Tab.Screen name="Properties" component={PropertyStack} />
-        <Tab.Screen name="Listings" component={ListingStack} />
-        <Tab.Screen name='Appointments' component={ScheduledAppointmentScreen} />
+        <Tab.Screen name="MarketPlace" component={MarketplaceStack} />
+        <Tab.Screen name="Chat" component={ChatStack} />
+        <Tab.Screen name='Wallet' component={WalletScreen} />
+        <Tab.Screen name='Profile' component={ProfileStack} />
       </Tab.Navigator>
     </View>
   );

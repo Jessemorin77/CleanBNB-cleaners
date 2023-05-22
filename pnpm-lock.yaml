@@ -124,6 +124,9 @@ importers:
       react-native-image-crop-picker:
         specifier: ^0.39.0
         version: 0.39.0(react-native@0.71.8)
+      react-native-image-picker:
+        specifier: ^5.3.1
+        version: 5.3.1(react-native@0.71.8)(react@18.2.0)
       react-native-safe-area-context:
         specifier: 4.5.0
         version: 4.5.0(react-native@0.71.8)(react@18.2.0)
@@ -10797,6 +10800,16 @@ packages:
     peerDependencies:
       react-native: '>=0.40.0'
     dependencies:
+      react-native: 0.71.8(@babel/core@7.20.5)(@babel/preset-env@7.20.2)(react@18.2.0)
+    dev: false
+
+  /react-native-image-picker@5.3.1(react-native@0.71.8)(react@18.2.0):
+    resolution: {integrity: sha512-zRCjtlE3KOeaWDM8gXzTwXfvo3ZeF2XMkHceU7CVCtKRleKxna/E4XWIPu/lXO2qlMdnSx1WvfPSbqzAX0qxpA==}
+    peerDependencies:
+      react: '*'
+      react-native: '*'
+    dependencies:
+      react: 18.2.0
       react-native: 0.71.8(@babel/core@7.20.5)(@babel/preset-env@7.20.2)(react@18.2.0)
     dev: false
 

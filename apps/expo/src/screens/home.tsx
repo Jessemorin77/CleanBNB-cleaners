@@ -1,4 +1,5 @@
 import React from "react";
+import { useEffect } from "react";
 import {
   Button,
   Text,
@@ -13,7 +14,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { FlashList } from "@shopify/flash-list";
 import type { inferProcedureOutput } from "@trpc/server";
 import type { AppRouter } from "@acme/api";
-
+import { storeUserData } from "../services/dataService";
 import { trpc } from "../utils/trpc";
 
 const SignOut = () => {
@@ -31,6 +32,7 @@ const SignOut = () => {
 };
 
 export const HomeScreen = () => {
+  
   return (
     <SafeAreaView className="bg-[#111827] bg-gradient-to-b from-[#2e026d] to-[#15162c]">
       <ScrollView className="h-full">

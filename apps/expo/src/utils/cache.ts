@@ -9,7 +9,7 @@ export async function saveToken(key: string, value: string) {
 export async function getToken(key: string) {
   console.log("Getting token for key", key);
   const value = await SecureStore.getItemAsync(key);
-  console.log("Got token", value);
+  console.log("Got token for key", key, ": value", value);
   return value;
 }
 
