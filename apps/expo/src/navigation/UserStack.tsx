@@ -1,8 +1,6 @@
 import { createStackNavigator } from "@react-navigation/stack"
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs"
 import { HomeScreen } from "../screens/home"
-import  PropertyScreen  from "../screens/PropertyScreen"
-import  {AddPropertyScreen}  from "../screens/AddPropertyScreen"
 import { View } from "react-native"
 import  MarketplaceScreen  from "../screens/MarketplaceScreen"
 import { ScheduledAppointmentScreen } from "../screens/ScheduledAppointmentScreen"
@@ -10,6 +8,7 @@ import { ChatScreen } from "../screens/ChatScreen"
 import { WalletScreen } from "../screens/WalletScreen"
 import { ProfileScreen } from "../screens/ProfileScreen"
 import ListingDetailsScreen from "../screens/ListingDetailsScreen"
+import BidScreen from "../screens/BidScreen"
 
 const Stack = createStackNavigator()
 const Tab = createBottomTabNavigator();
@@ -23,7 +22,10 @@ export type PropertyStackParamList = {
 export type MarketplaceStackParamList = {
   Marketplace: undefined;
   ListingDetails: undefined;
+  Bid: undefined;
 };
+
+
 
 const MarketplaceStack = () => {
   return (
@@ -36,6 +38,11 @@ const MarketplaceStack = () => {
       <Stack.Screen
         name="ListingDetails"
         component={ListingDetailsScreen}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="Bid"
+        component={BidScreen}
         options={{ headerShown: false }}
       />
     </Stack.Navigator>

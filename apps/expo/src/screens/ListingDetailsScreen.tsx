@@ -1,54 +1,40 @@
 import React from 'react';
-import { View, Text, Touchable } from 'react-native';
-import { useRoute } from '@react-navigation/native';
+import { View, Text } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { TouchableOpacity } from 'react-native-gesture-handler';
-import { trpc } from '../utils/trpc';
+import { RouteProp } from '@react-navigation/native';
+import { StackNavigationProp } from '@react-navigation/stack';
+import { MarketplaceStackParamList } from "../navigation/UserStack";
 
-function ListingDetailsScreen() {
-  
-  const route = useRoute();
+type ListingDetailsScreenRouteProp = RouteProp<MarketplaceStackParamList, 'ListingDetails'>;
+
+type ListingDetailsScreenNavigationProp = StackNavigationProp<
+  MarketplaceStackParamList,
+  'ListingDetails'
+>;
+
+interface Props {
+  route: ListingDetailsScreenRouteProp;
+  navigation: ListingDetailsScreenNavigationProp;
+}
+
+function ListingDetailsScreen({ route, navigation }: Props) {
   const { listingId } = route.params;
 
-  // Fetch data or perform operations based on the listingId
-  const { data: listing } = trpc.list.get.useQuery({
-    listingId: listingId as string,
-  });
-
-  if (!listing) {
-    return null; // Handle the case when the listing data is not available yet
-  }
-
-  const bidMutation = trpc.bid.create.useMutation();
-
-  const handlePlaceBid = async () => {
-    // Perform the mutation using the mutate function
-    try {
-      await bidMutation.mutate({
-        listingId: listingId as string,
-      });
-      alert("Bid Successful");
-    } catch (error) {
-      console.error(error);
-      alert("Bid failed");
-    }
-  }
+  const handlePlaceBid = () => {
+    navigation.navigate('Bid', { listingId: listingId });
+  };
 
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: 'black' }}>
       <View>
         <Text className='text-white text-3xl text-center p-16'>Listing Details</Text>
-        <Text className='text-white'>Title: {listing.title}</Text>
-        <Text className='text-white'>Description: {listing.description}</Text>
-        <Text className='text-white'>Budget: {listing.budget}</Text>
-        <Text className='text-white'>Job Type: {listing.jobType}</Text>
-        <Text className='text-white'>Contractor Type: {listing.contractorType}</Text>
-        <Text className='text-white'>Property Image: {listing.property?.Image}</Text>
-        <Text className='text-white'>Property Address: {listing.property?.Address}</Text>
+        <Text className='text-white'>Title: {listingId}</Text>
         <View className='p-10'>
           <TouchableOpacity 
             style={{ backgroundColor: 'blue', borderRadius: 8, padding: 16 }}
-            onPress={() => handlePlaceBid()}
+            onPress={handlePlaceBid}
           >
             <Text className='text-white text-center'>Place Bid</Text>
           </TouchableOpacity>
@@ -59,3 +45,4 @@ function ListingDetailsScreen() {
 }
 
 export default ListingDetailsScreen;
+

@@ -6,9 +6,6 @@ export const userRouter = router({
   storeUserData: publicProcedure
     .mutation(async ({ ctx }) => {
       const discordId = ctx.auth.user?.id;
-      const email = ctx.auth.user?.primaryEmailAddressId;
-      const name = ctx.auth.user?.firstName;
-
       if (!discordId) {
         throw new Error("Discord ID is not provided");
       }
