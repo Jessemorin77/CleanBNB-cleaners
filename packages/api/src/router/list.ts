@@ -8,6 +8,15 @@ export const listRouter = router({
   byId: publicProcedure.input(z.string()).query(({ ctx, input }) => {
     return ctx.prisma.listing.findFirst({ where: { id: input } }); // changed from post to listing
   }),
+  get: publicProcedure
+    .input(z.object({ listingId: z.string() }))
+    .query(({ ctx, input }) => {
+      return ctx.prisma.listing.findUnique({
+        where: {
+          id: input.listingId,
+        },
+      });
+    }),
   create: protectedProcedure
     .input(
       z.object({

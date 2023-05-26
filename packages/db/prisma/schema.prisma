@@ -53,6 +53,16 @@ model Listing {
   title          String
   description    String
   budget         Int
+  bids           Bid[]
 }
 
-
+model Bid {
+  id         String   @id @default(cuid())
+  userId     String   // Foreign key referencing User id
+  listingId  String
+  listing    Listing?  @relation(fields: [listingId], references: [id])
+  bidAmount  Int?
+  bidMessage String?
+  bidStatus  String?
+  bidDate    DateTime? @default(now())
+}

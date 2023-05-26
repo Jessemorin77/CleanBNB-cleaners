@@ -33,7 +33,7 @@ interface ListingData {
 }
 
 type Listing = ListingData;
-
+// 
 interface MarketplaceScreenProps {
   navigation: StackNavigationProp<MarketplaceStackParamList, "Marketplace">;
 }
@@ -54,7 +54,7 @@ const MarketplaceScreen: React.FC<MarketplaceScreenProps> = ({ navigation }) => 
   });
 
   const handleListingPress = (listing: Listing) => {
-    navigation.navigate("ListingDetails", { listingId: listing.id });
+    navigation.navigate("ListingDetails", { listingId: listing.id});
   };
 
   const renderMyItem: React.FC<{ listing: Listing }> = ({ listing }) => {
