@@ -1,22 +1,20 @@
-import { View, Text, SafeAreaView, TouchableOpacity } from "react-native"
-
+import { View, Text, SafeAreaView, TouchableOpacity } from "react-native";
 
 export const WalletScreen = () => {
-    return(
-        <SafeAreaView className="h-full bg-black">
-            <View>
-            <Text className="text-white text-3xl text-center">
-                Wallet
-            </Text>
-            <Text className="text-white text-2xl text-center p-5 flex-auto">Ballence:</Text>
-            <Text className="text-white text-2xl p-5 flex-auto">Transactions:</Text>
-            <View className="p-10">
-                <TouchableOpacity className="bg-blue-500 rounded p-5">
-                    <Text className="text-white">Withdrawl</Text>
-                </TouchableOpacity>
-            </View>
+  return (
+    <SafeAreaView className="h-full bg-black">
+      <View>
+        <Text className="text-center text-3xl text-white">Wallet</Text>
+        <Text className="flex-auto p-5 text-center text-2xl text-white">
+          Ballence:
+        </Text>
+        <Text className="flex-auto p-5 text-2xl text-white">Transactions:</Text>
+        <View className="p-10">
+          <TouchableOpacity className="rounded bg-blue-500 p-5">
+            <Text className="text-white">Withdrawl</Text>
+          </TouchableOpacity>
         </View>
-        </SafeAreaView>
-        
-    )
-}
+      </View>
+    </SafeAreaView>
+  );
+};

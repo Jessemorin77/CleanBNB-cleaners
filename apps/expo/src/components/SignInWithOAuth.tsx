@@ -3,11 +3,9 @@ import * as React from "react";
 import { Button, View } from "react-native";
 import { useWarmUpBrowser } from "../hooks/useWarmUpBrowser";
 
-
 const SignInWithOAuth = () => {
   useWarmUpBrowser();
   const { startOAuthFlow } = useOAuth({ strategy: "oauth_discord" });
-  
 
   const handleSignInWithDiscordPress = React.useCallback(async () => {
     try {
@@ -16,11 +14,12 @@ const SignInWithOAuth = () => {
       if (createdSessionId) {
         setActive({ session: createdSessionId });
 
-        
         console.log("User data stored successfully");
       } else {
         // Modify this code to handle any missing requirements you set in your dashboard.
-        throw new Error("There are unmet requirements, modify this else to handle them");
+        throw new Error(
+          "There are unmet requirements, modify this else to handle them",
+        );
       }
     } catch (err) {
       console.log("Error signing in", err);

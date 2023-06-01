@@ -7,33 +7,35 @@ import React from "react";
 
 type Listing = inferProcedureOutput<AppRouter["list"]["all"]>[number];
 
-const PostCards: React.FC <{ listing: Listing; }> = ({listing}) => {
+const PostCards: React.FC<{ listing: Listing }> = ({ listing }) => {
   return (
-    <View className="rounded-lg border-4 border-black p1">
-        <Text className="text-xl font-semubold text-[#cc66ff]">{listing.title}</Text>
-        <Text className="text-white">{listing.description}</Text>
-        <Text className="text-white">{listing.budget}</Text>
-        <Text className="text-white">{listing.jobType}</Text>
-        <Text className="text-white">{listing.contractorType}</Text>
+    <View className="p1 rounded-lg border-4 border-black">
+      <Text className="font-semubold text-xl text-[#cc66ff]">
+        {listing.title}
+      </Text>
+      <Text className="text-white">{listing.description}</Text>
+      <Text className="text-white">{listing.budget}</Text>
+      <Text className="text-white">{listing.jobType}</Text>
+      <Text className="text-white">{listing.contractorType}</Text>
     </View>
-  )
-}
+  );
+};
 
 export const ListingCardList: React.FC = () => {
   const propQuery = trpc.list.all.useQuery();
   const [showListing, setShowListing] = React.useState<string | null>(null);
 
   const data: Listing[] = propQuery.data ?? [];
-  return(
+  return (
     <FlashList
       data={data}
       estimatedItemSize={20}
-      ItemSeparatorComponent={() => <View className="h-2"/>}
-      renderItem={({item}: {item: Listing}) => (
+      ItemSeparatorComponent={() => <View className="h-2" />}
+      renderItem={({ item }: { item: Listing }) => (
         <TouchableOpacity onPress={() => setShowListing(item.id)}>
           <PostCards listing={item} />
         </TouchableOpacity>
       )}
     />
-  )
-}
+  );
+};

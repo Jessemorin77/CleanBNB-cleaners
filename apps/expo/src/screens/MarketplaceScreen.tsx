@@ -1,5 +1,11 @@
 import React from "react";
-import { View, Text, SafeAreaView, Image, TouchableOpacity } from "react-native";
+import {
+  View,
+  Text,
+  SafeAreaView,
+  Image,
+  TouchableOpacity,
+} from "react-native";
 import { FlatList } from "react-native-gesture-handler";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { MarketplaceStackParamList } from "../navigation/UserStack";
@@ -33,12 +39,14 @@ interface ListingData {
 }
 
 type Listing = ListingData;
-// 
+//
 interface MarketplaceScreenProps {
   navigation: StackNavigationProp<MarketplaceStackParamList, "Marketplace">;
 }
 
-const MarketplaceScreen: React.FC<MarketplaceScreenProps> = ({ navigation }) => {
+const MarketplaceScreen: React.FC<MarketplaceScreenProps> = ({
+  navigation,
+}) => {
   const { data: listingData } = trpc.list.all.useQuery();
   const { data: propertyData } = trpc.property.all.useQuery();
 
@@ -54,7 +62,7 @@ const MarketplaceScreen: React.FC<MarketplaceScreenProps> = ({ navigation }) => 
   });
 
   const handleListingPress = (listing: Listing) => {
-    navigation.navigate("ListingDetails", { listingId: listing.id});
+    navigation.navigate("ListingDetails", { listingId: listing.id });
   };
 
   const renderMyItem: React.FC<{ listing: Listing }> = ({ listing }) => {
@@ -65,18 +73,22 @@ const MarketplaceScreen: React.FC<MarketplaceScreenProps> = ({ navigation }) => 
     console.log("Image URI:", listing.property.Image);
 
     return (
-      <View className="border border-gray-500 rounded-lg p-4 mb-4 w-1/2">
+      <View className="mb-4 w-1/2 rounded-lg border border-gray-500 p-4">
         <TouchableOpacity onPress={() => handleListingPress(listing)}>
           <Image
             source={{ uri: listing.property.Image }}
-            className="w-full h-40 mb-4 rounded-lg"
+            className="mb-4 h-40 w-full rounded-lg"
             resizeMode="cover"
           />
-          <Text className="font-bold text-lg mb-2 text-white">{listing.title}</Text>
-          <Text className="text-white mb-2 ">{listing.description}</Text>
+          <Text className="mb-2 text-lg font-bold text-white">
+            {listing.title}
+          </Text>
+          <Text className="mb-2 text-white ">{listing.description}</Text>
           <Text className="mb-2 text-white">Budget: ${listing.budget}</Text>
           <Text className="mb-2 text-white">Job Type: {listing.jobType}</Text>
-          <Text className="mb-2 text-white">Contractor Type: {listing.contractorType}</Text>
+          <Text className="mb-2 text-white">
+            Contractor Type: {listing.contractorType}
+          </Text>
         </TouchableOpacity>
       </View>
     );
@@ -84,7 +96,7 @@ const MarketplaceScreen: React.FC<MarketplaceScreenProps> = ({ navigation }) => 
 
   return (
     <SafeAreaView className="h-full bg-black p-5">
-      <Text className="text-white text-3xl text-center mb-5">Marketplace</Text>
+      <Text className="mb-5 text-center text-3xl text-white">Marketplace</Text>
       <FlatList
         data={listings}
         renderItem={({ item }) => renderMyItem({ listing: item })}

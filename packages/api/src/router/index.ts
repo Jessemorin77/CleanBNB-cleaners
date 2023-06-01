@@ -4,8 +4,9 @@ import { authRouter } from "./auth";
 import { propertyRouter } from "./property";
 import { listRouter } from "./list";
 import { userRouter } from "./user";
-import { webhookRouter } from "./webhook";
 import { bidRouter } from "./bid";
+import { profileRouter } from "./profile";
+import { chatRouter } from "./chat";
 
 export const appRouter = router({
   post: postRouter,
@@ -13,8 +14,9 @@ export const appRouter = router({
   property: propertyRouter,
   list: listRouter,
   user: userRouter,
-  webhook: webhookRouter,
   bid: bidRouter,
+  profile: profileRouter,
+  chat: chatRouter,
 });
 
 // export type definition of API

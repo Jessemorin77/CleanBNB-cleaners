@@ -1,16 +1,19 @@
 import React from "react";
 import { TouchableOpacity, Text, StyleSheet } from "react-native";
-import * as ImagePicker from 'expo-image-picker';
+import * as ImagePicker from "expo-image-picker";
 
 interface ImagePickerComponentProps {
   onImageSelected: (uri: string) => void;
 }
 
-export const ExpoImagePicker: React.FC<ImagePickerComponentProps> = ({ onImageSelected }) => {
+export const ExpoImagePicker: React.FC<ImagePickerComponentProps> = ({
+  onImageSelected,
+}) => {
   const pickImage = async (): Promise<void> => {
-    const permissionResult = await ImagePicker.requestMediaLibraryPermissionsAsync();
+    const permissionResult =
+      await ImagePicker.requestMediaLibraryPermissionsAsync();
     if (!permissionResult.granted) {
-      throw new Error('Permission to access media library is required!');
+      throw new Error("Permission to access media library is required!");
     }
 
     const result = await ImagePicker.launchImageLibraryAsync({
@@ -47,6 +50,3 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
   },
 });
-
-
-

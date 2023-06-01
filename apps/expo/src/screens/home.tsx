@@ -32,13 +32,12 @@ const SignOut = () => {
 };
 
 export const HomeScreen = () => {
-  
   return (
     <SafeAreaView className="bg-[#111827] bg-gradient-to-b from-[#2e026d] to-[#15162c]">
       <ScrollView className="h-full">
         <View className=" w-full p-4">
-          <Text className="mx-auto pb-2 text-5xl font-bold text-white">
-            Clean<Text className="text-[#cc66ff]">BNB</Text>
+          <Text className="mx-auto pb-2 text-4xl font-bold text-white">
+            Clean<Text className="text-[#cc66ff]">BNB</Text>-Cleaners
           </Text>
           <TouchableOpacity>
             <View className="m-4 overflow-hidden rounded-lg bg-white shadow">

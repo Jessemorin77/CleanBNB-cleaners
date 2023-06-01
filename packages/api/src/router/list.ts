@@ -23,7 +23,6 @@ export const listRouter = router({
         propertyId: z.string(),
         jobType: z.string(),
         contractorType: z.string(),
-        reacurring: z.boolean(),
         readyToHire: z.boolean(),
         budget: z.number(), // changed from string to number
         title: z.string(),

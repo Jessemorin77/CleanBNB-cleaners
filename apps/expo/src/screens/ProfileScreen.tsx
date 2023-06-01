@@ -11,16 +11,17 @@ export const ProfileScreen = () => {
     // Handle the selected image URI here
     setProfileImage(uri);
   };
-  
-  return(
+
+  return (
     <SafeAreaView className="bg-black">
-      <View className="bg-black h-full">
-        <Text className="text-center text-xl text-white">
-          Profile 
-        </Text>
+      <View className="h-full bg-black">
+        <Text className="text-center text-xl text-white">Profile</Text>
         <View>
           {profileImage ? (
-            <Image source={{ uri: profileImage }} style={{ width: 200, height: 200 }}  />
+            <Image
+              source={{ uri: profileImage }}
+              style={{ width: 200, height: 200 }}
+            />
           ) : (
             <Image
               source={require("../../assets/icon.png")} // Provide a placeholder image source
@@ -32,16 +33,19 @@ export const ProfileScreen = () => {
             <ExpoImagePicker onImageSelected={handleImageSelected} />
           </View>
         </View>
-        <Text className="text-white text-lg">Name: {user?.fullName}</Text>
-        <Text className="text-white text-lg">Rating:</Text>
-        <Text className="text-white text-lg">Skills:</Text>
-        <Text className="text-white text-lg">Bio:</Text>
-        <Text className="text-white text-lg">Email: {user?.primaryEmailAddress?.emailAddress}</Text>
-        <Text className="text-white text-lg">Phone: {user?.primaryPhoneNumber?.phoneNumber}</Text>
-        <Text className="text-white text-lg">City:</Text>
-        <Text className="text-white text-lg">State:</Text>
-
+        <Text className="text-lg text-white">Name: {user?.fullName}</Text>
+        <Text className="text-lg text-white">Rating:</Text>
+        <Text className="text-lg text-white">Skills:</Text>
+        <Text className="text-lg text-white">Bio:</Text>
+        <Text className="text-lg text-white">
+          Email: {user?.primaryEmailAddress?.emailAddress}
+        </Text>
+        <Text className="text-lg text-white">
+          Phone: {user?.primaryPhoneNumber?.phoneNumber}
+        </Text>
+        <Text className="text-lg text-white">City:</Text>
+        <Text className="text-lg text-white">State:</Text>
       </View>
     </SafeAreaView>
-  )
-}
+  );
+};

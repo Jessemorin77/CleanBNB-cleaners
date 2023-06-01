@@ -13,9 +13,20 @@
       "dependsOn": ["^db-generate"],
       "cache": false
     },
-    "build": {
+    "build-expo1": {
       "dependsOn": ["^build", "^db-generate"],
-      "outputs": [".next/**", ".expo/**"]
+      "outputs": ["apps/expo1/.expo/**"],
+      "cache": false
+    },
+    "build-expo-owners": {
+      "dependsOn": ["^build", "^db-generate"],
+      "outputs": ["apps/expo-owners/.expo/**"],
+      "cache": false
+    },
+    "build-nextjs": {
+      "dependsOn": ["^build", "^db-generate"],
+      "outputs": ["apps/nextjs/.next/**"],
+      "cache": false
     },
     "lint": {
       "outputs": []

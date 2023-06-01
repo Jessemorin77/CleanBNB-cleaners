@@ -3,13 +3,13 @@ import type { inferProcedureOutput } from "@trpc/server";
 import React from "react";
 import { View, TextInput, Text, Image } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
-import * as ImagePicker from 'expo-image-picker';
-import AWS from 'aws-sdk'
+import * as ImagePicker from "expo-image-picker";
+import AWS from "aws-sdk";
 
 const s3 = new AWS.S3({
-  accessKeyId: 'AKIA3TRZQE5PF7HOIJEI',
-  secretAccessKey: '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',
-  region: 'us-east-1',
+  accessKeyId: "AKIA3TRZQE5PF7HOIJEI",
+  secretAccessKey: "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",
+  region: "us-east-1",
 });
 
 interface PropertyData {
@@ -49,15 +49,19 @@ export const CreateProperty: React.FC = () => {
     Desc: "",
   });
 
-  const handleInputChange = (key: keyof PropertyData, value: string | number): void => {
+  const handleInputChange = (
+    key: keyof PropertyData,
+    value: string | number,
+  ): void => {
     setPropertyData((prevData) => ({ ...prevData, [key]: value }));
   };
 
   const pickImage = async (): Promise<void> => {
     try {
-      const permissionResult = await ImagePicker.requestMediaLibraryPermissionsAsync();
+      const permissionResult =
+        await ImagePicker.requestMediaLibraryPermissionsAsync();
       if (!permissionResult.granted) {
-        throw new Error('Permission to access camera roll is required!');
+        throw new Error("Permission to access camera roll is required!");
       }
 
       const result = await ImagePicker.launchImageLibraryAsync({
@@ -82,18 +86,21 @@ export const CreateProperty: React.FC = () => {
       const blob = await response.blob();
 
       const params = {
-        Bucket: 'cleanbnb-images',
+        Bucket: "cleanbnb-images",
         Key: `property_${Date.now()}.jpg`,
         Body: blob,
-        ContentType: 'image/jpeg',
+        ContentType: "image/jpeg",
       };
 
       await s3.upload(params).promise();
-      const signedUrl = await s3.getSignedUrlPromise('getObject', { Bucket: 'cleanbnb-images', Key: params.Key });
+      const signedUrl = await s3.getSignedUrlPromise("getObject", {
+        Bucket: "cleanbnb-images",
+        Key: params.Key,
+      });
       return signedUrl;
     } catch (error) {
       console.error(error);
-      throw new Error('Image upload failed');
+      throw new Error("Image upload failed");
     }
   };
 
@@ -150,10 +157,7 @@ export const CreateProperty: React.FC = () => {
         onChangeText={(value) => handleInputChange("Desc", value)}
         placeholder="Desc"
       />
-      <TouchableOpacity
-        className="rounded bg-blue-500 p-2"
-        onPress={pickImage}
-      >
+      <TouchableOpacity className="rounded bg-blue-500 p-2" onPress={pickImage}>
         <Text>Upload Image</Text>
       </TouchableOpacity>
       {propertyData.Image !== "" && (
@@ -173,6 +177,3 @@ export const CreateProperty: React.FC = () => {
     </View>
   );
 };
-
-
-

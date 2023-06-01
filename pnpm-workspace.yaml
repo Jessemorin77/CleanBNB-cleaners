@@ -1,5 +1,6 @@
 packages:
   - apps/expo
+  - apps/expo-owners
   - apps/nextjs
   - packages/api
   - packages/db
