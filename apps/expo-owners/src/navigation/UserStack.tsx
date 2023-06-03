@@ -8,9 +8,10 @@ import ListingScreen from "../screens/ListingScreen";
 import { AddListingScreen } from "../screens/AddListingScreen";
 import { ScheduledAppointmentScreen } from "../screens/ScheduledAppointmentScreen";
 import { BidScreen } from "../screens/BidScreen";
-import { ChatScreen } from "../screens/ChatScreen";
+import  ChatListScreen  from "../screens/ChatListScreen";
 import { ProfileScreen } from "../screens/ProfileScreen";
 import { EditProfileScreen } from "../screens/EditProfileScreen";
+import ChatScreen from "../screens/ChatScreen";
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -26,8 +27,8 @@ export type ProfileStackParamList = {
 };
 
 export type ChatStackParamList = {
-  Profile: undefined;
-  EditProfile: undefined;
+  ChatList: undefined;
+  Chat: undefined;
 };
 
 const PropertyStack = () => {
@@ -52,6 +53,11 @@ const ChatStack = () => {
     <Stack.Navigator>
       <Stack.Screen
         name="ChatList"
+        component={ChatListScreen}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="Chat"
         component={ChatScreen}
         options={{ headerShown: false }}
       />
