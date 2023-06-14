@@ -4,6 +4,7 @@ import { StackNavigationProp } from "@react-navigation/stack";
 import { useNavigation } from "@react-navigation/native";
 import { ChatStackParamList } from "../navigation/UserStack";
 import { trpc } from "../utils/trpc";
+import {Box} from 'native-base'
 
 interface ChatData {
   id: string;
@@ -43,14 +44,15 @@ const ChatListScreen: React.FC<ChatListScreenProps> = ({ navigation }) => {
 
   const renderItem = ({ item }: { item: Chat }) => (
     <TouchableOpacity onPress={() => handleChatPress(item)}>
-      <View>
+      <Box borderRadius="md" borderColor="white">
         <Text className="text-white text-xl text-center p-10">{item.name}</Text>
-      </View>
+      </Box>
     </TouchableOpacity>
   );
 
   return (
     <SafeAreaView className="flex-1 bg-black">
+      <Text className="text-white text-xl p-10">Inbox</Text>
       <FlatList
         data={chats}
         renderItem={renderItem}

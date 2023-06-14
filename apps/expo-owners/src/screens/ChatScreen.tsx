@@ -16,7 +16,7 @@ type ChatScreenProps = {
 const ChatScreen: React.FC<ChatScreenProps> = ({ navigation, route }) => {
   const [message, setMessage] = useState("");
   const { chatId } = route.params;
-
+  
   const { data: messages, isLoading } = trpc.chat.getMessagesByChatId.useQuery(chatId);
 
   const handleSendMessage = () => {

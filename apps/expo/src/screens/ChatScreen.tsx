@@ -19,13 +19,20 @@ const ChatScreen: React.FC<ChatScreenProps> = ({ navigation, route }) => {
 
   const { data: messages, isLoading } = trpc.chat.getMessagesByChatId.useQuery(chatId);
 
-  const handleSendMessage = () => {
-    // Perform the logic to send the message to the backend
-    // You can use the `trpc` object to make the API call
-    // Example: trpc.chat.sendMessage.mutate({ chatId, content: message });
+  const handleSendMessage = async () => {
+    if (message.trim() === "") return;
 
-    // Clear the input field after sending the message
-    setMessage("");
+    try {
+      await trpc.chat.createMessage.mutate({
+        chatId,
+        content: message,
+      });
+
+      // Clear the input field after sending the message
+      setMessage("");
+    } catch (error) {
+      console.error("Error sending message:", error);
+    }
   };
 
   if (isLoading) {
@@ -37,14 +44,14 @@ const ChatScreen: React.FC<ChatScreenProps> = ({ navigation, route }) => {
   }
 
   const renderItem = ({ item }: { item: Message }) => (
-    <View className="p-2">
+    <View style={{ padding: 2 }}>
       <Text>{item.content}</Text>
     </View>
   );
 
   return (
-    <SafeAreaView className="flex-1 bg-gray-100">
-      <View className="flex-1">
+    <SafeAreaView style={{ flex: 1, backgroundColor: "gray" }}>
+      <View style={{ flex: 1 }}>
         <FlatList
           data={messages}
           renderItem={renderItem}
@@ -52,16 +59,21 @@ const ChatScreen: React.FC<ChatScreenProps> = ({ navigation, route }) => {
         />
       </View>
 
-      <View className="p-2">
+      <View style={{ padding: 2 }}>
         <TextInput
           value={message}
           onChangeText={setMessage}
           placeholder="Type your message"
-          className="p-2 border border-gray-300 rounded"
+          style={{ padding: 2, borderWidth: 1, borderColor: "gray", borderRadius: 5 }}
         />
-        <TouchableOpacity onPress={handleSendMessage} className="bg-blue-500 p-2 rounded mt-2">
-          <Text className="text-white">Send</Text>
+        <View className="pb-48">
+        <TouchableOpacity onPress={handleSendMessage} style={{ backgroundColor: "blue", padding: 2, borderRadius: 5, marginTop: 2 }}>
+          <View className="">
+
+          <Text style={{ color: "white" }} className="">Send</Text>
+          </View>
         </TouchableOpacity>
+        </View>
       </View>
     </SafeAreaView>
   );
